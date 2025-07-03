@@ -1,0 +1,21 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+penv/
+
+# Environment variables
+.env
+
+# SQLite DB (optional, if you don't want to push this)
+portfolio.db
+
+# VSCode and IDE settings
+.vscode/
+*.log
+
+# OS-generated files
+.DS_Store
+Thumbs.db
