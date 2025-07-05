@@ -5,7 +5,7 @@ from appwrite.input_file import InputFile
 import uuid
 import io
 
-def handle_image_upload(db, file: UploadFile):
+def handle_image_upload(db, file: UploadFile, category: str, owner_id: int):
     try:
         unique_id = str(uuid.uuid4())
 
@@ -26,7 +26,7 @@ def handle_image_upload(db, file: UploadFile):
         image_url = f"https://cloud.appwrite.io/v1/storage/buckets/6868fba60016c28b868f/files/{uploaded_file['$id']}/preview"
 
         # Save URL and file ID to your DB
-        return save_image_url(db, image_url, uploaded_file['$id'])
+        return save_image_url(db, image_url, uploaded_file['$id'], category, owner_id)
 
     except Exception as e:
         print("Upload Error:", str(e))

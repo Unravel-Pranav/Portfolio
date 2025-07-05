@@ -1,16 +1,22 @@
 from sqlalchemy.orm import Session
-from app.models.image_model import ImageModel
+from app.models.image_model import Image
 
-def save_image_url(db: Session, image_url: str, file_id: str) -> ImageModel:
-    image = ImageModel(image_url=image_url, file_id=file_id)
-    db.add(image)
+def save_image_url(db: Session, url, file_id, category, owner_id):
+    db_image = Image(url=url, file_id=file_id, category=category, owner_id=owner_id)
+    db.add(db_image)
     db.commit()
-    db.refresh(image)
-    return image
+    db.refresh(db_image)
+    return db_image
 
-def delete_image_by_id(db: Session, image_id: int) -> ImageModel:
-    image = db.query(ImageModel).filter(ImageModel.id == image_id).first()
-    if image:
-        db.delete(image)
+def get_images_by_category_and_owner(db: Session, category: str, owner_id: int):
+    return db.query(Image).filter_by(category=category, owner_id=owner_id).all()
+
+def get_image(db: Session, image_id: int):
+    return db.query(Image).filter(Image.id == image_id).first()
+
+def delete_image_by_id(db: Session, image_id: int):
+    db_image = get_image(db, image_id)
+    if db_image:
+        db.delete(db_image)
         db.commit()
-    return image
+    return db_image

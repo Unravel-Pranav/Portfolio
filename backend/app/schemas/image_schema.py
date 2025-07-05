@@ -1,9 +1,14 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class ImageOut(BaseModel):
+class ImageCreate(BaseModel):
+    url: str
+    file_id: Optional[str] = None
+    category: str
+    owner_id: int
+
+class ImageOut(ImageCreate):
     id: int
-    image_url: str
-    file_id: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
